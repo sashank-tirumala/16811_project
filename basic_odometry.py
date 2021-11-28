@@ -27,7 +27,9 @@ if(__name__ == "__main__"):
     x_gt = df['x']
     y_gt = df['y']
     ori_gt = df['orientation']
-    x_est, y_est, ori_est = odom_est([x_gt[0], y_gt[0], ori_gt[0]], df_odom, 0.120)
+    time_end= df.iloc[num_pts]['Time']
+    x_est, y_est, ori_est = odom_est([x_gt[0], y_gt[0], ori_gt[0]], df_odom.loc[df_odom['Time']<time_end], 0.120)
+    print(x_est.shape, x_gt.shape)
     fig = plt.figure()
     plt.plot(x_gt[:num_pts], y_gt[:num_pts])
     plt.plot(x_est[:num_pts], y_est[:num_pts], 'r')
