@@ -17,7 +17,6 @@ def load_data(odom_data, measurement_data, time_end):
     return dat
 
 def odom_est(init_pts, odom_data, delta_t):
-    print(init_pts)
     x_est = []
     y_est = []
     ori_est = []
@@ -118,23 +117,6 @@ def kalman_filter_update(states, data, local_map):
             states = np.append(states, new_val, axis=0)
     return states
 
-def odom_est(init_pts, odom_data, delta_t):
-    x_est = []
-    y_est = []
-    ori_est = []
-    x_cur = init_pts[0]
-    y_cur = init_pts[1]
-    ori_cur = init_pts[2]
-    for index, data in odom_data.iterrows():
-        lin_vel = data["forward_velocity"]
-        ang_vel = data["angular_velocity"]
-        x_est.append(x_cur)
-        y_est.append(y_cur)
-        ori_est.append(ori_cur)
-        x_cur = x_cur + lin_vel*np.cos(ori_cur)*delta_t
-        y_cur = y_cur + lin_vel*np.sin(ori_cur)*delta_t
-        ori_cur = ori_cur + ang_vel*delta_t
-    return np.array(x_est), np.array(y_est), np.array(ori_est)
 
 if(__name__ == "__main__"):
     num_pts = 20000 #Considering first 20000 points for measurement
